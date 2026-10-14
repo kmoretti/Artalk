@@ -1,9 +1,19 @@
+FROM rust:1-alpine AS upgit-builder
+
+RUN apk add --no-cache musl-dev git ca-certificates
+
+ARG UPGIT_REPO=https://github.com/pluveto/upgit
+ARG UPGIT_TAG=master
+
+RUN git clone --depth 1 --branch "${UPGIT_TAG}" "${UPGIT_REPO}" /src
+
+WORKDIR /src
+
+RUN cargo build --release -p upgit
+
 FROM willowgod/artalk:latest
 
-# The Upgit release binary is a glibc Linux executable. The upstream final image
-# is Alpine/musl, so install compatibility plus compiler-runtime libraries or
-# the loader reports missing libgcc_s/_Unwind symbols.
-RUN apk add --no-cache gcompat libgcc libstdc++
+RUN apk add --no-cache bash tzdata
 
-COPY upgit /usr/bin/upgit
+COPY --from=upgit-builder /src/target/release/upgit /usr/bin/upgit
 RUN chmod 0755 /usr/bin/upgit

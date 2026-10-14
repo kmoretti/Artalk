@@ -1,9 +1,9 @@
 FROM willowgod/artalk:latest
 
 # The Upgit release binary is a glibc Linux executable. The upstream final image
-# is Alpine/musl, so install compatibility libraries or the shell reports
-# "/usr/bin/upgit: not found" (exit 127) even though the file is mounted.
-RUN apk add --no-cache gcompat libc6-compat
+# is Alpine/musl, so install compatibility plus compiler-runtime libraries or
+# the loader reports missing libgcc_s/_Unwind symbols.
+RUN apk add --no-cache gcompat libgcc libstdc++
 
 COPY upgit /usr/bin/upgit
 RUN chmod 0755 /usr/bin/upgit

@@ -1,0 +1,57 @@
+name: Build Artalk Upgit Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      upgit_version:
+        description: 'Upgit release tag, e.g. v0.3.0'
+        required: true
+        default: 'v0.3.0'
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ghcr.io/kmoretti/artalk-upgit
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Upgit
+        run: |
+          mkdir -p upgit-download
+          curl -fL -o upgit-download/upgit.zip \
+            "https://github.com/pluveto/upgit/releases/download/${{ inputs.upgit_version }}/upgit_linux_amd64.zip"
+          cd upgit-download
+          unzip upgit.zip
+          chmod 0755 upgit
+          cp upgit ../upgit
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile.upgit
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ inputs.upgit_version }}
+
+      - name: Clean Upgit from workspace
+        if: always()
+        run: rm -f upgit

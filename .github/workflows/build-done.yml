@@ -17,5 +17,5 @@ jobs:
       - name: Print done info
         run: |
           echo "Finished build and publish ${{ inputs.version }}"
-          echo "Docker Image: https://hub.docker.com/r/willowgod/artalk/tags"
+          echo "Docker Image: https://github.com/${{ github.repository }}/packages?repo_name=${{ github.event.repository.name }}"
           echo "GitHub Release: https://github.com/${{ github.repository }}/releases/tag/${{ inputs.version }}"

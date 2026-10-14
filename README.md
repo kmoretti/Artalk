@@ -27,7 +27,7 @@ This repository is a personal-maintained fork of [ArtalkJS/Artalk](https://githu
 ## Fork and Upstream
 
 - Upstream repository: [ArtalkJS/Artalk](https://github.com/ArtalkJS/Artalk)
-- Current repository: [LiuShen-Fork/Artalk](https://github.com/LiuShen-Fork/Artalk)
+- Current repository: [kmoretti/Artalk](https://github.com/kmoretti/Artalk)
 - Upstream documentation: [artalk.js.org](https://artalk.js.org)
 - `master` is based on `upstream/master`; fork-specific commits are kept here and synchronized manually.
 - The fork does not publish a separate npm client package. The frontend client remains based on the upstream package, while the server and administration console are maintained here.

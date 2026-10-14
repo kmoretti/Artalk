@@ -14,7 +14,7 @@ on:
         type: string
 
 env:
-  DOCKER_IMG: willowgod/artalk
+  DOCKER_IMG: ghcr.io/kmoretti/artalk
 
 jobs:
   build_publish:
@@ -42,11 +42,12 @@ jobs:
             type=sha
 
       # https://github.com/docker/login-action
-      - name: Login to DockerHub
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # https://github.com/docker/setup-qemu-action
       - name: Setup QEMU

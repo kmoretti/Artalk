@@ -2,7 +2,7 @@ version: "3.8"
 services:
   artalk:
     container_name: artalk
-    image: willowgod/artalk
+    image: ghcr.io/kmoretti/artalk:latest
     restart: unless-stopped
     build:
       context: ./

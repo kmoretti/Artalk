@@ -7,7 +7,7 @@
 ## 与上游的关系
 
 - 上游仓库：[ArtalkJS/Artalk](https://github.com/ArtalkJS/Artalk)
-- 本仓库：[LiuShen-Fork/Artalk](https://github.com/LiuShen-Fork/Artalk)
+- 本仓库：[kmoretti/Artalk](https://github.com/kmoretti/Artalk)
 - 上游文档：[artalk.js.org](https://artalk.js.org)
 - 上游变更会持续通过 `upstream` 远程同步，Fork 的定制提交会保留在本仓库自己的分支上。
 - 本 Fork 不发布 npm 前端包；前端评论包仍以当前上游版本为基础，主要维护服务端和管理端。
